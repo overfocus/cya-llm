@@ -18,6 +18,9 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
+
+          # Debug - Show public key
+          cat ~/.ssh/github_actions_deploy.pub  # or id_ed25519.pub
           # Create app directory if it doesn't exist
           mkdir -p /home/dtm_admin/apps/darktruthmedia_com
 
