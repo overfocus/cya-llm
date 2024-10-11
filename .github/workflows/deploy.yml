@@ -42,3 +42,6 @@ jobs:
 
           # Build the Rust application
           cargo build --release
+
+          #restart service
+          sudo systemctl restart darktruthmedia_com
