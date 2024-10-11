@@ -1,8 +1,5 @@
 // src/main.rs
-use axum::{
-    routing::get,
-    Router,
-};
+use axum::Router;
 use std::net::SocketAddr;
 use tower_http::services::ServeDir;
 
