@@ -18,7 +18,24 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
+          # Create app directory if it doesn't exist
+          mkdir -p /home/dtm_admin/apps/darktruthmedia_com
+
+          # Navigate to app directory
           cd /home/dtm_admin/apps/darktruthmedia_com
-          git pull
+
+          # Check if git repo exists, if not clone it
+          if [ ! -d .git ]; then
+            git clone https://github.com/overfocus/dtm.git .
+          else
+            git pull
+          fi
+
+          # Install Rust if not already installed
+          if ! command -v cargo &> /dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            source $HOME/.cargo/env
+          fi
+
+          # Build the Rust application
           cargo build --release
-          sudo systemctl restart darktruthmedia_com
