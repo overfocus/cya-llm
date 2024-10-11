@@ -26,7 +26,7 @@ jobs:
 
           # Check if git repo exists, if not clone it
           if [ ! -d .git ]; then
-            git clone https://github.com/overfocus/dtm.git .
+             git clone git@github.com:overfocus/dtm.git .
           else
             git pull
           fi
