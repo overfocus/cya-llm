@@ -13,10 +13,13 @@ jobs:
       run: cargo build --release
     - name: Deploy to VPS
       uses: appleboy/ssh-action@master
+      env:
+         HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        envs: HUGGINGFACE_API_KEY
         script: |
 
           # Debug - Show public key
