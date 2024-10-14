@@ -4,6 +4,8 @@ This project is an interactive storytelling API that generates dynamic "Choose Y
 
 Brought to you by Kevin Ferron of Kevin Ferron Tech Consultancy & Digital Agency
 
+Project is an example of using Rust & HTMX.
+
 ## Features
 
 - Dynamic story generation using AI
