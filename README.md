@@ -2,6 +2,8 @@
 
 This project is an interactive storytelling API that generates dynamic "Choose Your Own Adventure" style narratives. It uses AI to create engaging story segments and provides users with choices to shape the direction of the story.
 
+Brought to you by Kevin Ferron of Kevin Ferron Tech Consultancy & Digital Agency
+
 ## Features
 
 - Dynamic story generation using AI
@@ -53,7 +55,7 @@ The API has one main endpoint:
 
 ### Generate Story Segment
 
-- **URL:** `/api/generate`
+- **URL:** `/api/story/generate`
 - **Method:** `POST`
 - **Body:**
   ```json
