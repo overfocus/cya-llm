@@ -23,8 +23,8 @@ Brought to you by Kevin Ferron of Kevin Ferron Tech Consultancy & Digital Agency
 
 1. Clone the repository:
    ```
-   git clone https://github.com/overfocus/choose-your-own-adventure-api.git
-   cd choose-your-own-adventure-api
+   git clone https://github.com/overfocus/cya-llm.git
+   cd cya-llm
    ```
 
 2. Set up environment variables:
