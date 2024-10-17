@@ -3,127 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose Your Own Adventure</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.10/htmx.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Dark Truth Media - Unveiling Reality</title>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
-        body {
-            font-family: 'Merriweather', serif;
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #ff4136;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
             line-height: 1.6;
-            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZGFyayxuZXdzcGFwZXJ8fHx8fHwxNjE5MDQ5NjIw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .mission-statement {
+            font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-left: 4px solid var(--accent-color);
         }
-        h1 {
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 30px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #e60000;
+        }
+
+        .feature-section {
+            padding: 80px 0;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
             text-align: center;
-            color: #2c3e50;
-            font-weight: 700;
-        }
-        #story-wrapper {
-            background-color: white;
+            padding: 20px;
+            background-color: #f4f4f4;
             border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            transition: opacity 0.5s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
-        #story-content {
-            font-weight: 300;
-            font-size: 1.1em;
-            line-height: 1.8;
+
+        .feature-item:hover {
+            transform: translateY(-5px);
         }
-        #choices-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
         }
-        .choice-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Merriweather', serif;
-            font-size: 1em;
-            text-align: left;
-        }
-        .choice-btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .fade-out {
-            opacity: 0;
-        }
-        #start-btn {
-            display: block;
-            margin: 20px auto;
-            font-size: 1.2em;
-            padding: 15px 25px;
-            background-color: #2ecc71;
-        }
-        #start-btn:hover {
-            background-color: #27ae60;
+
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 20px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Choose Your Own Adventure</h1>
-    
-    <div id="story-wrapper">
-        <div id="story-content">
-            Welcome to your adventure! Click the button below to begin.
-        </div>
-    </div>
-    
-    <div id="choices-container">
-        <button id="start-btn" class="choice-btn" 
-                hx-post="/api/story/generate" 
-                hx-target="#story-wrapper" 
-                hx-swap="innerHTML"
-                hx-trigger="click"
-                hx-on::after-request="processResponse(event)">
-            Start Adventure
-        </button>
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#stories">Stories</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Dark Truth Media</h1>
+                <p class="mission-statement">
+                    Dark Truth Media is committed to fearlessly uncovering and disseminating truths obscured by corruption and misinformation. We pursue integrity by slaying deception in our media, confront challenging subjects head-on, and empower our audience to face reality with courage and clarity.
+                </p>
+                <a href="#stories" class="cta-button">Explore Our Stories</a>
+            </div>
+        </section>
+
+        <section id="about" class="feature-section">
+            <div class="container">
+                <h2>Our Approach</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Investigative Journalism</h3>
+                        <p>We dig deep to uncover hidden truths and expose corruption at all levels.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Fact-Checking</h3>
+                        <p>Rigorous fact-checking ensures the accuracy and reliability of our reporting.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💪</div>
+                        <h3>Empowering Readers</h3>
+                        <p>We provide the knowledge and context needed to navigate complex issues.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stories" class="feature-section" style="background-color: var(--secondary-color); color: var(--primary-color);">
+            <div class="container">
+                <h2>Latest Stories</h2>
+                <div id="stories-container" hx-get="/api/stories" hx-trigger="load">
+                    <p>Loading stories...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dark Truth Media. All rights reserved.</p>
+    </footer>
 
     <script>
-        var converter = new showdown.Converter();
-        
-        function processResponse(event) {
-            const response = JSON.parse(event.detail.xhr.response);
-            const storyWrapper = document.getElementById('story-wrapper');
-            const choicesContainer = document.getElementById('choices-container');
-
-            // Convert Markdown to HTML and update the story content
-            const htmlContent = converter.makeHtml(response.story_segment);
-            storyWrapper.innerHTML = `<div id="story-content">${htmlContent}</div>`;
-
-            // Clear previous choices
-            choicesContainer.innerHTML = '';
-            
-            // Add new choice buttons
-            response.choices.forEach((choice, index) => {
-                const button = document.createElement('button');
-                button.className = 'choice-btn';
-                button.textContent = choice.replace(/^\d+\.\s*\*\*(.*?)\*\*:/, '$1:');
-                button.setAttribute('hx-post', `/api/story/generate`);
-                button.setAttribute('hx-target', '#story-wrapper');
-                button.setAttribute('hx-swap', 'innerHTML');
-                button.setAttribute('hx-trigger', 'click');
-                button.setAttribute('hx-on::after-request', 'processResponse(event)');
-                button.setAttribute('hx-vals', JSON.stringify({choice: index + 1}));
-                choicesContainer.appendChild(button);
-            });
-
-            // Scroll to the top of the story wrapper
-            storyWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        // Placeholder for HTMX-loaded stories
+        document.body.addEventListener('htmx:afterSwap', function(event) {
+            if (event.detail.target.id === 'stories-container') {
+                console.log('Stories loaded');
+            }
+        });
     </script>
 </body>
 </html>
