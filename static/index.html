@@ -66,10 +66,20 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZGFyayxuZXdzcGFwZXJ8fHx8fHwxNjE5MDQ5NjIw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080');
-            background-size: cover;
-            background-position: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -1;
         }
 
         .hero::before {
@@ -80,6 +90,7 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.7);
+            z-index: 0;
         }
 
         .hero-content {
@@ -174,6 +185,10 @@
 
     <main>
         <section id="home" class="hero">
+            <video class="hero-video" autoplay loop muted playsinline>
+                <source src="/bg.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
             <div class="hero-content">
                 <h1>Dark Truth Media</h1>
                 <p class="mission-statement">
